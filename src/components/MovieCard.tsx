@@ -1,17 +1,20 @@
 import APIDATA from '../api';
-import { movieCard } from '../types';
+import { CardProps } from '../types';
 
 export default function MovieCard({
   id,
   poster_path,
   title,
+  name,
+  onClick,
   vote_average,
   release_date,
   original_language,
-}: movieCard) {
+}: CardProps) {
   return (
     <div
       key={id}
+      onClick={onClick}
       className="group relative mx-auto w-[325px] cursor-pointer overflow-hidden rounded-xl text-left sm:w-[285px]"
     >
       <img
@@ -21,7 +24,7 @@ export default function MovieCard({
       />
       <div className="ease absolute -bottom-2 left-0 my-2 min-h-[15vh] w-full place-content-end bg-gradient-to-t from-black to-transparent p-2 transition-all duration-300 group-hover:min-h-[42vh]">
         <h2 className="ease text-lg font-semibold transition-all duration-500 group-hover:-translate-y-10 group-hover:text-2xl">
-          {title}
+          {title || name}
         </h2>
         <div className="ease flex items-center space-x-2 text-sm transition-all duration-500 group-hover:-translate-y-5 group-hover:text-lg">
           <p>⭐ {vote_average.toFixed(1)}</p>
