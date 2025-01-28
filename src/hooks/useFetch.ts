@@ -37,7 +37,7 @@ export default function useFetch({
         if (!findByID) {
           throw new Error('ID is required for findByID');
         }
-        endpoint = `/find/${category}/${findByID}?language=en-US`;
+        endpoint = `/${category}/${findByID}?language=en-US`;
         break;
       default:
         throw new Error('Invalid urlType');

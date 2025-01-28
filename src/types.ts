@@ -8,8 +8,7 @@ export type CardProps = {
   vote_average: number;
   release_date?: string;
   original_language: string;
-  media_type?: string;
-  onClick?: () => void;
+  media_type?: 'movie' | 'tv' | 'person';
 };
 
 export type GridProps = {
@@ -30,5 +29,4 @@ export type SearchItemsProps = {
     profile_path: string;
     known_for_department: string;
   }[];
-  isLoading: boolean;
 };

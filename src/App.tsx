@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import Home from './pages/Home';
 import Explore from './pages/Explore';
+import Movies from './pages/section/Movies';
 
 function App() {
   return (
@@ -14,7 +15,12 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="explore/:media_type/:id" element={<Explore />} />
+            <Route
+              path="explore/movie"
+              element={<Navigate to="/explore/movies" replace />}
+            />
+            <Route path="explore/movies" element={<Movies />} />
+            <Route path="explore/:type/:id" element={<Explore />} />
             <Route path="*" element={<Navigate to={'/'} />} />
           </Routes>
         </Router>

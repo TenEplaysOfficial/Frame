@@ -11,7 +11,7 @@ export default function Btn({
     <button
       disabled={disabled}
       onClick={onClick}
-      className="mx-2 h-16 w-full cursor-pointer rounded-lg border-none bg-white/5 px-4 py-2 text-2xl font-medium ring-2 ring-sky-500 backdrop-blur-xl outline-none hover:bg-white/10 disabled:cursor-not-allowed disabled:bg-gray-700"
+      className="mx-2 h-16 w-full cursor-pointer rounded-lg border-none px-4 py-2 text-2xl font-medium ring-2 ring-white/20 backdrop-blur-xl outline-none hover:ring-white/70 active:bg-indigo-700 active:ring-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:bg-transparent"
     >
       {title}
     </button>

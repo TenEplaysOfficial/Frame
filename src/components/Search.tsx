@@ -4,18 +4,25 @@ import useFetch from '../hooks/useFetch';
 import APIDATA from '../api';
 import Loader from './Loader';
 import { SearchItemsProps } from '../types';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useDebounce from '../hooks/useDebounce';
 
 export default function Search() {
   const [search, setSearch] = useState('');
   const debouncedValue = useDebounce(search || '', 500);
-  const { data, isLoading } = useFetch({
+  const { data, isLoading, errorMessage } = useFetch({
     urlType: 'search',
     query: debouncedValue.trim() !== '' ? debouncedValue : null,
   });
   // console.log('Search rendered',search);
   // console.log('Search data', data);
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (errorMessage) {
+    return <div className="mx-auto text-red-500">{errorMessage}</div>;
+  }
   return (
     <>
       <div
@@ -41,28 +48,20 @@ export default function Search() {
           )}
         </span>
       </div>
-      {search.trim() !== '' && (
-        <SearchItems data={data} isLoading={isLoading} />
-      )}
+      {search.trim() !== '' && <SearchItems data={data} />}
     </>
   );
 }
 
-const SearchItems = ({ data, isLoading }: SearchItemsProps) => {
-  const navigate = useNavigate();
+const SearchItems = ({ data }: SearchItemsProps) => {
   return (
     <div className="scrollbar relative -top-2 max-h-[40vh] min-h-[20vh] w-full max-w-xl cursor-pointer space-y-2 overflow-y-scroll">
-      {isLoading ? (
-        <Loader />
-      ) : data.length > 0 ? (
-        data.map(
-          (item) =>
-            (item.poster_path || item.profile_path || item.backdrop_path) && (
+      {data.map(
+        (item) =>
+          (item.poster_path || item.profile_path || item.backdrop_path) && (
+            <Link to={`/explore/${item.media_type}/${item.id}`}>
               <div
                 key={item.id}
-                onClick={() =>
-                  navigate(`/explore/${item.media_type}/${item.id}`)
-                }
                 className={`flex items-center gap-2 rounded-2xl border bg-neutral-900/60 p-2 backdrop-blur-lg`}
               >
                 <img
@@ -102,10 +101,8 @@ const SearchItems = ({ data, isLoading }: SearchItemsProps) => {
                   </div>
                 </div>
               </div>
-            ),
-        )
-      ) : (
-        <p className="text-center font-semibold">Not found</p>
+            </Link>
+          ),
       )}
     </div>
   );
