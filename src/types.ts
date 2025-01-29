@@ -30,3 +30,45 @@ export type SearchItemsProps = {
     known_for_department: string;
   }[];
 };
+
+export type DetailsProps = {
+  data: {
+    poster_path: string;
+    backdrop_path: string;
+    original_name?: string;
+    name?: string;
+    title?: string;
+    release_date?: string;
+    vote_average?: number;
+    vote_count?: number;
+    profile_path?: string;
+    known_for_department?: string;
+    belongs_to_collection: {
+      poster_path: string;
+      backdrop_path: string;
+    };
+    genres: {
+      id?: number;
+      name?: string;
+    }[];
+    production_companies: {
+      id?: number;
+      logo_path?: string;
+      name?: string;
+      origin_country?: string;
+    }[];
+    spoken_languages: {
+      id: number;
+      english_name?: string;
+      name?: string;
+    }[];
+    homepage?: string;
+    overview?: string;
+    budget?: number;
+    revenue?: number;
+    runtime?: number;
+    tagline?: string;
+  };
+  isLoading: boolean;
+  errorMessage: string;
+};

@@ -14,41 +14,40 @@ export default function Movies({ title = 'Movies' }: { title?: string }) {
     pageNo,
   });
   // console.log('Movies data', data);
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (errorMessage) {
-    return <div className="mx-auto text-red-500">{errorMessage}</div>;
-  }
   const handleNextPage = () => setPageNo((prev) => prev + 1);
   const handlePreviousPage = () => setPageNo((prev) => Math.max(prev - 1, 1));
   return (
     <section>
       <Title title={title} />
       <Grid>
-        {data.map(
-          ({
-            id,
-            poster_path,
-            title,
-            name,
-            vote_average,
-            release_date,
-            original_language,
-          }: CardProps) => (
-            <MovieCard
-              key={id}
-              id={id}
-              poster_path={poster_path}
-              title={title}
-              name={name}
-              media_type={'movie'}
-              vote_average={vote_average}
-              release_date={release_date}
-              original_language={original_language}
-            />
-          ),
+        {isLoading ? (
+          <Loader />
+        ) : errorMessage ? (
+          <div className="mx-auto text-red-500">{errorMessage}</div>
+        ) : (
+          data.map(
+            ({
+              id,
+              poster_path,
+              title,
+              name,
+              vote_average,
+              release_date,
+              original_language,
+            }: CardProps) => (
+              <MovieCard
+                key={id}
+                id={id}
+                poster_path={poster_path}
+                title={title}
+                name={name}
+                media_type={'movie'}
+                vote_average={vote_average}
+                release_date={release_date}
+                original_language={original_language}
+              />
+            ),
+          )
         )}
       </Grid>
       <div className="flex flex-col justify-between space-y-3 px-2 pt-10 lg:flex-row">

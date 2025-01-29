@@ -16,13 +16,6 @@ export default function Search() {
   });
   // console.log('Search rendered',search);
   // console.log('Search data', data);
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (errorMessage) {
-    return <div className="mx-auto text-red-500">{errorMessage}</div>;
-  }
   return (
     <>
       <div
@@ -48,7 +41,13 @@ export default function Search() {
           )}
         </span>
       </div>
-      {search.trim() !== '' && <SearchItems data={data} />}
+      {isLoading ? (
+        <Loader />
+      ) : errorMessage ? (
+        <div className="mx-auto text-red-500">{errorMessage}</div>
+      ) : (
+        search.trim() !== '' && <SearchItems data={data} />
+      )}
     </>
   );
 }
