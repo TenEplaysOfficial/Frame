@@ -7,10 +7,14 @@ import ScrollToTop from './components/ScrollToTop';
 const AppRoutes = () => {
   const routes = [
     { path: '/', element: <Home /> },
-    ...['explore/movie', 'explore/movie/'].map((path) => ({
-      path,
+    {
+      path: 'explore/movie',
       element: <Navigate to="/explore/movies" replace />,
-    })),
+    },
+    {
+      path: 'explore/movie/',
+      element: <Navigate to="/explore/movies" replace />,
+    },
     { path: 'explore/movies', element: <Movies /> },
     { path: 'explore/:type/:id', element: <Explore /> },
     { path: '*', element: <Navigate to="/" /> },
@@ -18,13 +22,12 @@ const AppRoutes = () => {
 
   return useRoutes(routes);
 };
-
 function App() {
   return (
-    <div className="h-full min-h-screen bg-gradient-to-t from-neutral-950 to-[#0B0019] text-white">
+    <div className="min-h-screen bg-zinc-950 text-white">
       <div className="mx-auto max-w-7xl px-2 pb-12 sm:px-5 md:px-0">
-        <ScrollToTop />
         <Router>
+          <ScrollToTop />
           <AppRoutes />
         </Router>
       </div>

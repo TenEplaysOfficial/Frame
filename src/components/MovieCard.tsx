@@ -28,7 +28,9 @@ export default function MovieCard({
             {title || name}
           </h2>
           <div className="ease flex items-center space-x-2 text-sm transition-all duration-500 group-hover:-translate-y-5 group-hover:text-lg">
-            <p>⭐ {vote_average.toFixed(1)}</p>
+            {vote_average && (
+              <p>⭐ {vote_average && vote_average.toFixed(1)}</p>
+            )}
             <span>•</span>
             <p>{original_language}</p>
             <span>•</span>
