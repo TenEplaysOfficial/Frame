@@ -58,7 +58,7 @@ export type DetailsProps = {
       origin_country?: string;
     }[];
     spoken_languages: {
-      id:number;
+      id: number;
       english_name?: string;
       name?: string;
     }[];
@@ -71,4 +71,4 @@ export type DetailsProps = {
   };
   isLoading: boolean;
   errorMessage: string;
-}
+};

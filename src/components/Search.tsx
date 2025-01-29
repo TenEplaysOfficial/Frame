@@ -41,10 +41,13 @@ export default function Search() {
           )}
         </span>
       </div>
-      {
-        isLoading?<Loader />:errorMessage?<div className="mx-auto text-red-500">{errorMessage}</div>:
-      search.trim() !== '' && <SearchItems data={data} />
-      }
+      {isLoading ? (
+        <Loader />
+      ) : errorMessage ? (
+        <div className="mx-auto text-red-500">{errorMessage}</div>
+      ) : (
+        search.trim() !== '' && <SearchItems data={data} />
+      )}
     </>
   );
 }
