@@ -7,18 +7,12 @@ import Loader from '../../components/Loader';
 export default function Trending({ title = 'Trending' }: { title?: string }) {
   const { data, isLoading, errorMessage } = useFetch({ urlType: 'trending' });
   // console.log('Trending data', data);
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (errorMessage) {
-    return <div className="mx-auto text-red-500">{errorMessage}</div>;
-  }
   return (
     <section>
       <Title title={title} />
       <div className="hide-scrollbar flex max-h-fit min-h-[60vh] w-full space-x-4 overflow-x-scroll px-2 py-4">
-        {data.map(
+        {
+        isLoading?<Loader />:errorMessage? <div className="mx-auto text-red-500">{errorMessage}</div>:data.map(
           ({
             id,
             poster_path,
