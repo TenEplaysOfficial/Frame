@@ -54,7 +54,7 @@ export default function Search() {
 
 const SearchItems = ({ data }: SearchItemsProps) => {
   return (
-    <div className="scrollbar relative -top-2 max-h-[40vh] min-h-[20vh] w-full max-w-xl cursor-pointer space-y-2 overflow-y-scroll">
+    <div className="scrollbar relative -top-2 h-[40vh] w-full max-w-xl cursor-pointer space-y-2 overflow-y-scroll">
       {data.map(
         (item) =>
           (item.poster_path || item.profile_path || item.backdrop_path) && (

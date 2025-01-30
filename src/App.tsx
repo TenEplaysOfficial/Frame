@@ -25,7 +25,7 @@ const AppRoutes = () => {
 function App() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
-      <div className="mx-auto max-w-7xl px-2 pb-12 sm:px-5 md:px-0">
+      <div className="mx-auto max-w-7xl px-2 pb-12">
         <Router>
           <ScrollToTop />
           <AppRoutes />

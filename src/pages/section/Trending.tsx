@@ -3,6 +3,7 @@ import Title from '../../components/Title';
 import { CardProps } from '../../types';
 import useFetch from '../../hooks/useFetch';
 import Loader from '../../components/Loader';
+import HorizontalLayout from '../../components/Layout/HorizontalLayout';
 
 export default function Trending({ title = 'Trending' }: { title?: string }) {
   const { data, isLoading, errorMessage } = useFetch({ urlType: 'trending' });
@@ -10,7 +11,7 @@ export default function Trending({ title = 'Trending' }: { title?: string }) {
   return (
     <section>
       <Title title={title} />
-      <div className="hide-scrollbar flex max-h-fit min-h-[60vh] w-full space-x-4 overflow-x-scroll px-2 py-4">
+      <HorizontalLayout>
         {isLoading ? (
           <Loader />
         ) : errorMessage ? (
@@ -43,7 +44,7 @@ export default function Trending({ title = 'Trending' }: { title?: string }) {
             ),
           )
         )}
-      </div>
+      </HorizontalLayout>
     </section>
   );
 }

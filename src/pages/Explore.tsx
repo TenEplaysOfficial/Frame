@@ -62,9 +62,9 @@ const Details = ({ data, isLoading, errorMessage }: DetailsProps) => {
         <div className="mx-auto text-red-500">{errorMessage}</div>
       ) : (
         data && (
-          <>
+          <section>
             <div className="relative md:min-h-[60vh]">
-              {
+              {backdropImage && (
                 <img
                   src={`${APIDATA.IMAGE_Backdrop_BASE_URL}${backdropImage}`}
                   alt={data.original_name || 'No title available'}
@@ -72,7 +72,7 @@ const Details = ({ data, isLoading, errorMessage }: DetailsProps) => {
                     isPending ? 'opacity-50' : 'opacity-100'
                   }`}
                 />
-              }
+              )}
               <div
                 className={`absolute bottom-2 left-0 flex items-center gap-2 p-2 shadow-2xl sm:left-2`}
               >
@@ -85,53 +85,69 @@ const Details = ({ data, isLoading, errorMessage }: DetailsProps) => {
                 />
               </div>
             </div>
+            <div className="iterms-center flex justify-between pt-3">
+              <div>
+                <h2 className="text-4xl font-bold">
+                  {isLoading
+                    ? 'Loading...'
+                    : data.name || data.title || data.original_name}
+                </h2>
+                <p className="text-lg font-light text-gray-200/85">
+                  {data.tagline}
+                </p>
+              </div>
+              <Btn title="Visit" urlExternal={data.homepage} smSize />
+            </div>
+            <p>{data.overview}</p>
 
-            <Btn title="Visit" urlExternal={data.homepage} smSize />
-            <h2>
-              {isLoading
-                ? 'Loading...'
-                : data.name || data.title || data.original_name}
-            </h2>
-            <p>Release Date: {isLoading ? 'Loading...' : data.release_date}</p>
+            {data.release_date && (
+              <>
+                <Title2 title="Release Date:" />
+                <p>{isLoading ? 'Loading...' : data.release_date}</p>
+              </>
+            )}
             <p>Vote Average: {isLoading ? 'Loading...' : data.vote_average}</p>
             <p>{isLoading ? 'Loading...' : data.known_for_department}</p>
             <p>{data.budget}</p>
-            <p>{data.homepage}</p>
-            <p>{data.name}</p>
-            <p>{data.overview}</p>
             <p>{data.profile_path}</p>
             <p>{data.release_date}</p>
             <p>{data.revenue}</p>
             <p>{data.runtime}</p>
             <p>{data.vote_count}</p>
-            <p>{data.vote_count}</p>
-            <div className="flex space-x-11">
-              {data?.genres.map((d, index) => <p key={index}>{d.name}</p>)}
+
+            <Title2 title="Genres:" />
+            <div className="flex flex-wrap">
+              {data?.genres.map((d, index) => (
+                <Gen key={index} title={d.name || 'N/A'} />
+              ))}
             </div>
-            <div className="flex space-x-11">
+
+            <Title2 title="Production Companies:" />
+            <div className="flex flex-wrap">
               {data.production_companies.map((d, index) => (
-                <span
-                  key={index}
-                  className="flex flex-col items-center justify-end"
-                >
-                  {/* {d.logo_path && (
-                  <img
-                    src={`${APIDATA.IMAGE_Backdrop_BASE_URL}${d.logo_path}`}
-                    className="w-20"
-                  />
-                )} */}
-                  <p>{d.name}</p>
-                </span>
+                <>
+                  {/* {d.logo_path && ( <img src={`${APIDATA.IMAGE_Backdrop_BASE_URL}${d.logo_path}`} className="w-20" /> )} */}
+                  <Gen key={index} title={d.name || 'N/A'} />
+                </>
               ))}
             </div>
-            <div className="flex space-x-11">
+            <Title2 title="Spoken Languages:" />
+            <div className="flex flex-wrap">
               {data.spoken_languages.map((d, index) => (
-                <p key={index}>{d.name}</p>
+                <Gen key={index} title={d.name || 'N/A'} />
               ))}
             </div>
-          </>
+          </section>
         )
       )}
     </>
   );
+};
+
+const Gen = ({ title }: { title: string }) => {
+  return <p className="size-fit border p-2 text-nowrap">{title}</p>;
+};
+
+const Title2 = ({ title }: { title: string }) => {
+  return <h3 className="text-lg">{title}</h3>;
 };
