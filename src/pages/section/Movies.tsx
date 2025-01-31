@@ -50,16 +50,18 @@ export default function Movies({ title = 'Movies' }: { title?: string }) {
           )
         )}
       </Grid>
-      <div className="flex flex-col justify-between space-y-3 px-2 pt-10 lg:flex-row">
-        {/* {pageNo > 1 && ( */}
-        <Btn
-          onClick={handlePreviousPage}
-          title="Previous Page"
-          disabled={pageNo <= 1}
-        />
-        {/* )} */}
-        <Btn onClick={handleNextPage} title="Next Page" />
-      </div>
+      {!isLoading && (
+        <div className="flex flex-col justify-between space-y-3 px-2 pt-10 lg:flex-row">
+          {/* {pageNo > 1 && ( */}
+          <Btn
+            onClick={handlePreviousPage}
+            title="Previous Page"
+            disabled={pageNo <= 1}
+          />
+          {/* )} */}
+          <Btn onClick={handleNextPage} title="Next Page" />
+        </div>
+      )}
     </section>
   );
 }
