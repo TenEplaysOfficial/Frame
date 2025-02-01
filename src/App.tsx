@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Explore from './pages/Explore';
 import Movies from './pages/section/Movies';
 import ScrollToTop from './components/ScrollToTop';
+import Nav from './components/Nav';
 
 const AppRoutes = () => {
   const routes = [
@@ -25,12 +26,13 @@ const AppRoutes = () => {
 function App() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
-      <div className="mx-auto max-w-7xl px-2 pb-12">
-        <Router>
+      <Router>
+        <Nav />
+        <div className="mx-auto max-w-7xl px-2 pb-12">
           <ScrollToTop />
           <AppRoutes />
-        </Router>
-      </div>
+        </div>
+      </Router>
     </div>
   );
 }

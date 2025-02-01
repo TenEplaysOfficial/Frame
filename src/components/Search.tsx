@@ -54,11 +54,11 @@ export default function Search() {
 
 const SearchItems = ({ data, isLoading, errorMessage }: SearchItemsProps) => {
   return (
-    <div className="scrollbar relative -top-2 h-[40vh] w-full max-w-xl cursor-pointer space-y-2 overflow-y-scroll">
+    <div className="scrollbar relative -top-2 max-h-[40vh] w-full max-w-xl cursor-pointer space-y-2 overflow-y-scroll">
       {isLoading ? (
         <Loader />
       ) : errorMessage ? (
-        <div className="mx-auto text-red-500">{errorMessage}</div>
+        <div className="text-center text-red-500">{errorMessage}</div>
       ) : (
         data.map(
           (item) =>
