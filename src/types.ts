@@ -29,6 +29,8 @@ export type SearchItemsProps = {
     profile_path: string;
     known_for_department: string;
   }[];
+  isLoading?: boolean;
+  errorMessage?: string;
 };
 
 export type DetailsProps = {
@@ -68,6 +70,14 @@ export type DetailsProps = {
     revenue?: number;
     runtime?: number;
     tagline?: string;
+    biography?: string;
+    birthday?: string;
+    deathday?: string | null;
+    imdb_id?: string;
+    popularity?: number;
+    place_of_birth?: string;
+    gender?: number;
+    also_known_as?: [];
   };
   isLoading: boolean;
   errorMessage: string;

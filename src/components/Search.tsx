@@ -41,67 +41,72 @@ export default function Search() {
           )}
         </span>
       </div>
-      {isLoading ? (
-        <Loader />
-      ) : errorMessage ? (
-        <div className="mx-auto text-red-500">{errorMessage}</div>
-      ) : (
-        search.trim() !== '' && <SearchItems data={data} />
+      {search.trim() !== '' && (
+        <SearchItems
+          data={data}
+          isLoading={isLoading}
+          errorMessage={errorMessage}
+        />
       )}
     </>
   );
 }
 
-const SearchItems = ({ data }: SearchItemsProps) => {
+const SearchItems = ({ data, isLoading, errorMessage }: SearchItemsProps) => {
   return (
     <div className="scrollbar relative -top-2 h-[40vh] w-full max-w-xl cursor-pointer space-y-2 overflow-y-scroll">
-      {data.map(
-        (item) =>
-          (item.poster_path || item.profile_path || item.backdrop_path) && (
-            <Link to={`/explore/${item.media_type}/${item.id}`}>
-              <div
-                key={item.id}
-                className={`flex items-center gap-2 rounded-2xl border bg-neutral-900/60 p-2 backdrop-blur-lg`}
-              >
-                <img
-                  src={`${APIDATA.IMAGE_w500_BASE_URL}${item.poster_path || item.profile_path || item.backdrop_path}`}
-                  alt={item.name}
-                  className="max-w-28 rounded-lg"
-                />
-                <div>
-                  <h3 className="text-lg font-semibold">
-                    {(item.name || item.title) === item.original_name
-                      ? item.original_name
-                      : item.name
-                        ? `${item.name} (${item.original_name})`
-                        : item.title}
-                  </h3>
+      {isLoading ? (
+        <Loader />
+      ) : errorMessage ? (
+        <div className="mx-auto text-red-500">{errorMessage}</div>
+      ) : (
+        data.map(
+          (item) =>
+            (item.poster_path || item.profile_path || item.backdrop_path) && (
+              <Link key={item.id} to={`/explore/${item.media_type}/${item.id}`}>
+                <div
+                  className={`flex items-center gap-2 rounded-2xl border bg-neutral-900/60 p-2 backdrop-blur-lg`}
+                >
+                  <img
+                    src={`${APIDATA.IMAGE_w500_BASE_URL}${item.poster_path || item.profile_path || item.backdrop_path}`}
+                    alt={item.name}
+                    className="min-h-28 w-28 rounded-lg"
+                  />
+                  <div>
+                    <h3 className="text-lg font-semibold">
+                      {(item.name || item.title) === item.original_name
+                        ? item.original_name
+                        : item.name
+                          ? `${item.name} (${item.original_name})`
+                          : item.title}
+                    </h3>
 
-                  <div className="mt-2 flex space-x-2 text-sm">
-                    {item.vote_average && (
-                      <p>
-                        <span className="pr-2">★</span>
-                        {item.vote_average}
-                      </p>
-                    )}
-                    {item.vote_average && item.release_date && <span>•</span>}
-                    {item.release_date && <p>{item.release_date}</p>}
-                    {(item.release_date || item.vote_average) &&
-                      item.media_type && <span>•</span>}
-                    {item.media_type && (
-                      <p>
-                        {item.media_type.charAt(0).toUpperCase() +
-                          item.media_type.slice(1)}
-                      </p>
-                    )}
-                    {item.known_for_department && (
-                      <p>{item.known_for_department}</p>
-                    )}
+                    <div className="mt-2 flex space-x-2 text-sm">
+                      {item.vote_average && (
+                        <p>
+                          <span className="pr-2">★</span>
+                          {item.vote_average}
+                        </p>
+                      )}
+                      {item.vote_average && item.release_date && <span>•</span>}
+                      {item.release_date && <p>{item.release_date}</p>}
+                      {(item.release_date || item.vote_average) &&
+                        item.media_type && <span>•</span>}
+                      {item.media_type && (
+                        <p>
+                          {item.media_type.charAt(0).toUpperCase() +
+                            item.media_type.slice(1)}
+                        </p>
+                      )}
+                      {item.known_for_department && (
+                        <p>{item.known_for_department}</p>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ),
+              </Link>
+            ),
+        )
       )}
     </div>
   );
