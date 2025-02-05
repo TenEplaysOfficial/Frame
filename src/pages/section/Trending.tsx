@@ -1,12 +1,14 @@
 import MovieCard from '../../components/MovieCard';
 import Title from '../../components/Title';
-import { CardProps } from '../../types';
+import { MovieProps } from '../../types';
 import useFetch from '../../hooks/useFetch';
 import Loader from '../../components/Loader';
 import HorizontalLayout from '../../components/Layout/HorizontalLayout';
 
 export default function Trending({ title = 'Trending' }: { title?: string }) {
-  const { data, isLoading, errorMessage } = useFetch({ urlType: 'trending' });
+  const { data, isLoading, errorMessage }: MovieProps = useFetch({
+    urlType: 'trending',
+  });
   // console.log('Trending data', data);
   return (
     <section>
@@ -27,7 +29,7 @@ export default function Trending({ title = 'Trending' }: { title?: string }) {
               release_date,
               original_language,
               media_type,
-            }: CardProps) => (
+            }) => (
               <div key={id} className="flex-none">
                 <MovieCard
                   key={id}

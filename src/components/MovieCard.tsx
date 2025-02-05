@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import APIDATA from '../api';
-import { CardProps } from '../types';
+import { MovieCardProps } from '../types';
 
 export default function MovieCard({
   id,
@@ -11,7 +11,7 @@ export default function MovieCard({
   vote_average,
   release_date,
   original_language,
-}: CardProps) {
+}: MovieCardProps) {
   return (
     <Link to={`/explore/${media_type}/${id}`}>
       <div

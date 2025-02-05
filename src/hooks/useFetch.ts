@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import APIDATA from '../api';
+
 interface FetchProps {
   urlType: string;
   pageNo?: number;
@@ -7,14 +8,15 @@ interface FetchProps {
   query?: string | null;
   findByID?: string;
 }
-export default function useFetch({
+
+export default function useFetch<T>({
   pageNo = 1,
   category,
   urlType,
   query,
   findByID,
 }: FetchProps) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<T[] | []>([]); // Ensure data is an array of T
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -58,19 +60,26 @@ export default function useFetch({
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        const data = await response.json();
-        if (data.results?.length === 0 || data.results === 'False') {
-          setErrorMessage('No results found');
-          setData([]);
+        const fetchedData = await response.json();
+        // Handle the 'findByID' case differently
+        if (urlType === 'findByID') {
+          if (!fetchedData) {
+            setErrorMessage('No data found');
+            setData([]);
+          } else {
+            setData([fetchedData]); // Wrap the data in an array
+          }
         } else {
-          setData(data.results || data);
+          if (fetchedData.results?.length === 0 || fetchedData.results === 'False') {
+            setErrorMessage('No results found');
+            setData([]);
+          } else {
+            setData(fetchedData.results || fetchedData);
+          }
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
-          setErrorMessage(
-            error.message ||
-              'Error while fetching data, please try again later',
-          );
+          setErrorMessage(error.message || 'Error while fetching data, please try again later');
         } else {
           setErrorMessage('Error while fetching data, please try again later');
         }
@@ -80,6 +89,7 @@ export default function useFetch({
     };
 
     fetchData();
-  }, [generateEndpoint]);
+  }, [generateEndpoint,urlType]);
+
   return { data, isLoading, errorMessage };
 }

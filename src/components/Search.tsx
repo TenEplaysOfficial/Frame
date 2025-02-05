@@ -10,7 +10,7 @@ import useDebounce from '../hooks/useDebounce';
 export default function Search() {
   const [search, setSearch] = useState('');
   const debouncedValue = useDebounce(search || '', 500);
-  const { data, isLoading, errorMessage } = useFetch({
+  const { data, isLoading, errorMessage }: SearchItemsProps = useFetch({
     urlType: 'search',
     query: debouncedValue.trim() !== '' ? debouncedValue : null,
   });
