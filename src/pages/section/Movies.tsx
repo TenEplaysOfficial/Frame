@@ -19,22 +19,22 @@ export default function Movies({ title = 'Movies' }: { title?: string }) {
   return (
     <section>
       <Title title={title} />
-      <Grid>
-        {isLoading ? (
-          <Loader />
-        ) : errorMessage ? (
-          <div className="mx-auto text-red-500">{errorMessage}</div>
-        ) : (
-          data.map(
-            ({
-              id,
-              poster_path,
-              title,
-              name,
-              vote_average,
-              release_date,
-              original_language,
-            }: CardProps) => (
+      {isLoading ? (
+        <Loader />
+      ) : errorMessage ? (
+        <div className="mx-auto text-red-500">{errorMessage}</div>
+      ) : (
+        data.map(
+          ({
+            id,
+            poster_path,
+            title,
+            name,
+            vote_average,
+            release_date,
+            original_language,
+          }: CardProps) => (
+            <Grid>
               <MovieCard
                 key={id}
                 id={id}
@@ -46,10 +46,10 @@ export default function Movies({ title = 'Movies' }: { title?: string }) {
                 release_date={release_date}
                 original_language={original_language}
               />
-            ),
-          )
-        )}
-      </Grid>
+            </Grid>
+          ),
+        )
+      )}
       {!isLoading && (
         <div className="flex flex-col justify-between space-y-3 px-2 pt-10 lg:flex-row">
           {/* {pageNo > 1 && ( */}

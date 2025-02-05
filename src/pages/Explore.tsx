@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import APIDATA from '../api';
 import { ReactNode, useEffect, useState, useTransition } from 'react';
@@ -28,7 +28,14 @@ const Details = ({ data, isLoading, errorMessage }: DetailsProps) => {
   const [isPending, startTransition] = useTransition();
   const [backdropImage, setBackdropImage] = useState<string | null>(null);
   const [posterImage, setPosterImage] = useState<string | null>(null);
-  const { type } = useParams();
+  const { type, id } = useParams();
+  const [credits, setCredits] = useState<{
+    cast: { name: string; profile_path: string; character: string }[];
+    crew: { name: string; profile_path: string; job: string }[];
+  }>({
+    cast: [],
+    crew: [],
+  });
 
   useEffect(() => {
     startTransition(() => {
@@ -55,6 +62,28 @@ const Details = ({ data, isLoading, errorMessage }: DetailsProps) => {
       }
     });
   }, [data]);
+
+  useEffect(() => {
+    if (!id || !type) return;
+    const fetchCredits = async () => {
+      try {
+        const response = await fetch(
+          `${APIDATA.API_BASE_URL}/${type}/${id}/credits`,
+          APIDATA.API_OPTIONS,
+        );
+        // if (!response.ok) throw new Error('Failed to fetch credits');
+        const creditsData = await response.json();
+        setCredits({
+          cast: creditsData.cast || [],
+          crew: creditsData.crew || [],
+        });
+      } catch (error) {
+        console.error('Error fetching credits:', error);
+      }
+    };
+    fetchCredits();
+  }, [id, type]);
+  // console.log(credits);
 
   return (
     <>
@@ -170,6 +199,38 @@ const Details = ({ data, isLoading, errorMessage }: DetailsProps) => {
                 ))}
               </div>
             </div>
+
+            {/* Crew Section */}
+            <section>
+              <Title2 title="Crew:" />
+              <div className="flex flex-wrap gap-4">
+                {credits.crew
+                  .filter((member) =>
+                    ['Director', 'Producer', 'Writer'].includes(member.job),
+                  )
+                  .map(
+                    (crew, index) =>
+                      crew.profile_path && (
+                        <ProfileCard key={index} data={crew} />
+                      ),
+                  )}
+              </div>
+            </section>
+
+            {/* Cast Section */}
+            <section>
+              <Title2 title="Cast:" />
+              <div className="flex flex-wrap gap-4">
+                {credits.cast
+                  .slice(0, 10)
+                  .map(
+                    (actor, index) =>
+                      actor.profile_path && (
+                        <ProfileCard key={index} data={actor} />
+                      ),
+                  )}
+              </div>
+            </section>
           </section>
         )
       )}
@@ -197,5 +258,31 @@ const DetailsInline = ({
       <Title2 title={title} />
       {children}
     </div>
+  );
+};
+
+const ProfileCard = ({
+  data,
+}: {
+  data: {
+    profile_path: string;
+    name: string;
+    character?: string;
+    job?: string;
+    id?: number;
+  };
+}) => {
+  return (
+    <Link to={`/explore/person/${data.id}`}>
+      <div className="w-32 text-center">
+        <img
+          src={`${APIDATA.IMAGE_w500_BASE_URL}${data.profile_path}`}
+          alt={data.name}
+          className="w-full rounded-lg"
+        />
+        <p className="mt-1 font-bold">{data.name}</p>
+        <p className="text-sm text-gray-400">{data.character || data.job}</p>
+      </div>
+    </Link>
   );
 };
