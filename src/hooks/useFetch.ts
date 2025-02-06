@@ -70,7 +70,10 @@ export default function useFetch<T>({
             setData([fetchedData]); // Wrap the data in an array
           }
         } else {
-          if (fetchedData.results?.length === 0 || fetchedData.results === 'False') {
+          if (
+            fetchedData.results?.length === 0 ||
+            fetchedData.results === 'False'
+          ) {
             setErrorMessage('No results found');
             setData([]);
           } else {
@@ -79,9 +82,10 @@ export default function useFetch<T>({
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
-          setErrorMessage(error.message || 'Error while fetching data, please try again later');
-        } else {
-          setErrorMessage('Error while fetching data, please try again later');
+          setErrorMessage(
+            error.message ||
+              'Error while fetching data, please try again later',
+          );
         }
       } finally {
         setIsLoading(false);
@@ -89,7 +93,7 @@ export default function useFetch<T>({
     };
 
     fetchData();
-  }, [generateEndpoint,urlType]);
+  }, [generateEndpoint, urlType]);
 
   return { data, isLoading, errorMessage };
 }

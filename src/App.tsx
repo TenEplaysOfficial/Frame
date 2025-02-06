@@ -19,7 +19,7 @@ const AppRoutes = () => {
     },
     { path: 'explore/movies', element: <Movies /> },
     { path: 'explore/:type/:id', element: <MovieTv /> },
-    { path: 'explore/peroon/:id', element: <Person /> },
+    { path: 'explore/person/:id', element: <Person /> },
     { path: '*', element: <Navigate to="/" /> },
   ];
 

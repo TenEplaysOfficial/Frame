@@ -1,18 +1,20 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { PersonDataProps } from '../../types';
 import APIDATA from '../../api';
-import { useEffect, useState } from 'react';
 
 export default function Person() {
   const { id } = useParams();
+  // console.log(id);
+
   const [data, setData] = useState<PersonDataProps | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!id) {
+    if (!id || isNaN(Number(id))) {
       setLoading(false);
-      setError('Invalid parameters');
+      setError('Invalid ID');
       return;
     }
 
@@ -24,19 +26,19 @@ export default function Person() {
         console.log('Fetching data from:', url);
 
         const response = await fetch(url, APIDATA.API_OPTIONS);
-
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
 
         const res = await response.json();
-        console.log('API Response:', res);
+        // console.log('API Response:', res);
 
-        if (res) {
-          setData(res);
-        } else {
+        if (!res || Object.keys(res).length === 0) {
           setError('No data found');
+          return;
         }
+
+        setData(res);
       } catch (error) {
         setError(`Error fetching data`);
         console.error('Error fetching data:', error);
@@ -57,7 +59,7 @@ export default function Person() {
       {data ? (
         <div>
           <img
-            src={`${APIDATA.IMAGE_w500_BASE_URL}${data.profile_path}`}
+            src={`${APIDATA.IMAGE_w500_BASE_URL}${data.profile_path || ''}`}
             alt={data.name || 'No title available'}
             className="w-32 rounded-lg md:w-56"
           />
