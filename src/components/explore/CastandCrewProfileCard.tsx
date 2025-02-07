@@ -11,14 +11,15 @@ export default function CastandCrewProfileCard({
 }: CastandCrewProfileCardProps) {
   return (
     <Link to={`/explore/person/${id}`}>
-      <div className="w-32 text-center">
+      <div className="font-para w-32 text-center">
         <img
           src={`${APIDATA.IMAGE_w500_BASE_URL}${profile_path}`}
           alt={name}
+          loading="lazy"
           className="w-full rounded-lg"
         />
-        <p className="mt-1 font-bold">{name}</p>
-        <p className="text-sm text-gray-400">{character || job}</p>
+        <p className="mt-1 font-medium">{name}</p>
+        <p className="text-sm font-medium text-gray-400">{character || job}</p>
       </div>
     </Link>
   );

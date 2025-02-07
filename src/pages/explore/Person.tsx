@@ -61,6 +61,7 @@ export default function Person() {
           <img
             src={`${APIDATA.IMAGE_w500_BASE_URL}${data.profile_path || ''}`}
             alt={data.name || 'No title available'}
+            loading="lazy"
             className="w-32 rounded-lg md:w-56"
           />
           <p>{data.name}</p>

@@ -27,6 +27,7 @@ export default function MovieTv() {
           <img
             src={`${APIDATA.IMAGE_w500_BASE_URL}${Data.poster_path}`}
             alt={Data.title || 'No title available'}
+            loading="lazy"
             className="w-32 rounded-lg md:w-56"
           />
           <h1>{Data.title}</h1>

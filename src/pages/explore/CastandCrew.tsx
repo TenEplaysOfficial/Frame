@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import CastandCrewProfileCard from '../../components/explore/CastandCrewProfileCard';
 import { useEffect, useState } from 'react';
 import APIDATA from '../../api';
+import TitleExplore from '../../components/explore/TitleExplore';
 
 export default function CastandCrew() {
   const { id, type } = useParams();
@@ -46,44 +47,72 @@ export default function CastandCrew() {
     return null;
   }
 
+  const mergedCrew = Object.values(
+    credits.crew
+      .filter((member) => member.profile_path)
+      .reduce(
+        (acc, member) => {
+          if (!acc[member.id]) {
+            acc[member.id] = { ...member, job: new Set([member.job]) };
+          } else {
+            acc[member.id].job.add(member.job);
+          }
+          return acc;
+        },
+        {} as Record<
+          number,
+          { id: number; profile_path: string; name: string; job: Set<string> }
+        >,
+      ),
+  ).map((member) => ({
+    ...member,
+    job: [...member.job].join(', '),
+  }));
+
   return (
     <>
-      <h1>Crew</h1>
-      <div className="flex flex-wrap gap-4">
-        {credits.crew
-          .filter((member) =>
-            ['Director', 'Producer', 'Writer'].includes(member.job),
-          )
-          .map(
-            (crew) =>
-              crew.profile_path && (
-                <CastandCrewProfileCard
-                  key={crew.id}
-                  id={crew.id}
-                  profile_path={crew.profile_path}
-                  name={crew.name}
-                  job={crew.job}
-                />
-              ),
-          )}
-      </div>
-
-      <div className="flex flex-wrap gap-4">
-        {credits.cast
-          .slice(0, 10)
-          .map(
-            (actor) =>
-              actor.profile_path && (
-                <CastandCrewProfileCard
-                  key={actor.id}
-                  id={actor.id}
-                  profile_path={actor.profile_path}
-                  name={actor.name}
-                  job={actor.character}
-                />
-              ),
-          )}
-      </div>
+      {credits.crew && (
+        <>
+          <TitleExplore title="Crew" />
+          <div className="flex flex-wrap gap-4">
+            {mergedCrew
+              .slice(0, 10)
+              .map(
+                (crew) =>
+                  crew.profile_path && (
+                    <CastandCrewProfileCard
+                      key={crew.id}
+                      id={crew.id}
+                      profile_path={crew.profile_path}
+                      name={crew.name}
+                      job={crew.job}
+                    />
+                  ),
+              )}
+          </div>
+        </>
+      )}
+      {credits.cast && (
+        <>
+          <TitleExplore title="Cast" />
+          <div className="flex flex-wrap gap-4">
+            {credits.cast
+              // .slice(0, 10)
+              .map(
+                (actor) =>
+                  actor.profile_path && (
+                    <CastandCrewProfileCard
+                      key={actor.id}
+                      id={actor.id}
+                      profile_path={actor.profile_path}
+                      name={actor.name}
+                      job={actor.character}
+                    />
+                  ),
+              )}
+          </div>
+        </>
+      )}
     </>
   );
 }

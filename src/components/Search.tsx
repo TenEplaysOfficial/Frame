@@ -26,7 +26,7 @@ export default function Search() {
           placeholder="Search"
           onChange={(e) => setSearch(e.target.value)}
           value={search}
-          className="flex-1 border-none bg-transparent py-1 text-lg tracking-widest outline-none placeholder:text-white/65"
+          className="font-secondary flex-1 border-none bg-transparent py-1 text-lg tracking-widest outline-none placeholder:text-white/65"
         />
         <span>
           {search ? (
@@ -70,10 +70,11 @@ const SearchItems = ({ data, isLoading, errorMessage }: SearchItemsProps) => {
                   <img
                     src={`${APIDATA.IMAGE_w500_BASE_URL}${item.poster_path || item.profile_path || item.backdrop_path}`}
                     alt={item.name}
+                    loading="lazy"
                     className="min-h-28 w-28 rounded-lg"
                   />
                   <div>
-                    <h3 className="text-lg font-semibold">
+                    <h3 className="font-secondary text-lg font-medium">
                       {(item.name || item.title) === item.original_name
                         ? item.original_name
                         : item.name
@@ -81,7 +82,7 @@ const SearchItems = ({ data, isLoading, errorMessage }: SearchItemsProps) => {
                           : item.title}
                     </h3>
 
-                    <div className="mt-2 flex space-x-2 text-sm">
+                    <div className="font-para mt-2 flex space-x-2 text-sm">
                       {item.vote_average && (
                         <p>
                           <span className="pr-2">★</span>
