@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { PersonDataProps } from '../../types';
 import APIDATA from '../../api';
+import Loader from '../../components/Loader';
+import Grid from '../../components/Layout/Grid';
+import { GridItem } from '../../components/explore/GridItem';
+import TitleExplore from '../../components/explore/TitleExplore';
 
 export default function Person() {
   const { id } = useParams();
@@ -50,22 +54,45 @@ export default function Person() {
     fetchData();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
-
   return (
     <>
-      <h1>Person</h1>
-      {data ? (
-        <div>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <div className="text-red-500">{error}</div>
+      ) : data ? (
+        <section className="font-para">
           <img
             src={`${APIDATA.IMAGE_w500_BASE_URL}${data.profile_path || ''}`}
             alt={data.name || 'No title available'}
             loading="lazy"
             className="w-32 rounded-lg md:w-56"
           />
-          <p>{data.name}</p>
-        </div>
+
+          <h1 className="font-primary text-lg sm:text-xl">{data.name}</h1>
+
+          <span className="text-gray-400">
+            {data.gender === 2 ? 'Male' : 'Female'}
+          </span>
+          <TitleExplore title="Details" />
+          <p>{data.biography}</p>
+          <Grid columns="grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <GridItem title="Birthday" data={data.birthday} />
+            {data.deathday && (
+              <GridItem title="Deathday" data={data.deathday} />
+            )}
+            <GridItem
+              title="Gender"
+              data={data.gender === 2 ? 'Male' : 'Female'}
+            />
+            <GridItem title="Place of birth" data={data.place_of_birth} />
+            <GridItem
+              title="Known for department"
+              data={data.known_for_department}
+            />
+            <GridItem title="Also known as" data={data.also_known_as} />
+          </Grid>
+        </section>
       ) : (
         <div>No data available</div>
       )}

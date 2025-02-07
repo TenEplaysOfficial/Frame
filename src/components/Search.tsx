@@ -54,7 +54,7 @@ export default function Search() {
 
 const SearchItems = ({ data, isLoading, errorMessage }: SearchItemsProps) => {
   return (
-    <div className="scrollbar relative -top-2 max-h-[40vh] w-full max-w-xl cursor-pointer space-y-2 overflow-y-scroll">
+    <div className="scrollbar space-y- relative -top-2 max-h-[40vh] w-full max-w-xl cursor-pointer overflow-y-scroll">
       {isLoading ? (
         <Loader />
       ) : errorMessage ? (
@@ -65,7 +65,7 @@ const SearchItems = ({ data, isLoading, errorMessage }: SearchItemsProps) => {
             (item.poster_path || item.profile_path || item.backdrop_path) && (
               <Link key={item.id} to={`/explore/${item.media_type}/${item.id}`}>
                 <div
-                  className={`flex items-center gap-2 rounded-2xl border bg-neutral-900/60 p-2 backdrop-blur-lg`}
+                  className={`mt-1 mb-3 flex items-center gap-2 rounded-2xl border bg-neutral-900/60 p-2 backdrop-blur-lg`}
                 >
                   <img
                     src={`${APIDATA.IMAGE_w500_BASE_URL}${item.poster_path || item.profile_path || item.backdrop_path}`}
@@ -81,7 +81,7 @@ const SearchItems = ({ data, isLoading, errorMessage }: SearchItemsProps) => {
                           ? `${item.name} (${item.original_name})`
                           : item.title}
                     </h3>
-
+                    <p className="line-clamp-2">{item.overview}</p>
                     <div className="font-para mt-2 flex space-x-2 text-sm">
                       {item.vote_average && (
                         <p>

@@ -17,6 +17,8 @@ export type MovieProps = {
 
 export type GridProps = {
   children: ReactNode;
+  columns?: string;
+  gap?: string;
 };
 
 export type SearchItemsProps = {
@@ -32,6 +34,7 @@ export type SearchItemsProps = {
     vote_average?: number;
     profile_path?: string;
     known_for_department?: string;
+    overview?: string;
   }[];
   isLoading?: boolean;
   errorMessage?: string;
@@ -96,6 +99,7 @@ export type MovieTvDataProps = {
     status?: string;
     tagline?: string;
     title?: string;
+    name?: string;
     vote_average?: number;
     belongs_to_collection?: {
       poster_path?: string;
