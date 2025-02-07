@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import CastandCrewProfileCard from '../../components/explore/CastandCrewProfileCard';
+import CastandCrewProfileCard from './CastandCrewProfileCard';
 import { useEffect, useState } from 'react';
 import APIDATA from '../../api';
-import TitleExplore from '../../components/explore/TitleExplore';
+import TitleExplore from './TitleExplore';
 
 export default function CastandCrew() {
   const { id, type } = useParams();
