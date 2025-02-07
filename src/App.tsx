@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Navigate, useRoutes } from 'react-router-dom';
 import Home from './pages/Home';
-import Explore from './pages/Explore';
 import Movies from './pages/section/Movies';
 import ScrollToTop from './components/ScrollToTop';
+import Nav from './components/Nav';
+import MovieTv from './pages/explore/MovieTv';
+import Person from './pages/explore/Person';
 
 const AppRoutes = () => {
   const routes = [
@@ -16,7 +18,8 @@ const AppRoutes = () => {
       element: <Navigate to="/explore/movies" replace />,
     },
     { path: 'explore/movies', element: <Movies /> },
-    { path: 'explore/:type/:id', element: <Explore /> },
+    { path: 'explore/:type/:id', element: <MovieTv /> },
+    { path: 'explore/person/:id', element: <Person /> },
     { path: '*', element: <Navigate to="/" /> },
   ];
 
@@ -25,12 +28,13 @@ const AppRoutes = () => {
 function App() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
-      <div className="mx-auto max-w-7xl px-2 pb-12 sm:px-5 md:px-0">
-        <Router>
-          <ScrollToTop />
+      <Router>
+        <Nav />
+        <main className="mx-auto max-w-7xl px-2 pb-12">
           <AppRoutes />
-        </Router>
-      </div>
+        </main>
+        <ScrollToTop />
+      </Router>
     </div>
   );
 }
