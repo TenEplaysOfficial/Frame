@@ -71,7 +71,7 @@ export default function CastandCrew() {
 
   return (
     <>
-      {credits.crew && (
+      {credits.crew.some((crew) => crew.profile_path) && (
         <>
           <TitleExplore title="Crew" />
           <div className="flex flex-wrap gap-4">
@@ -92,7 +92,7 @@ export default function CastandCrew() {
           </div>
         </>
       )}
-      {credits.cast && (
+      {credits.cast.some((cast) => cast.profile_path) && (
         <>
           <TitleExplore title="Cast" />
           <div className="flex flex-wrap gap-4">
