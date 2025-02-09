@@ -7,6 +7,8 @@ import Grid from '../../components/Layout/Grid';
 import { GridItem } from '../../components/explore/GridItem';
 import TitleExplore from '../../components/explore/TitleExplore';
 import { getAge } from '../../utils/utils';
+import ErrorMsg from '../../components/ErrorMsg';
+import Recommendations from '../../components/explore/Recommendations';
 
 export default function Person() {
   const { id } = useParams();
@@ -28,7 +30,7 @@ export default function Person() {
       setError(null);
       try {
         const url = `${APIDATA.API_BASE_URL}/person/${id}`;
-        console.log('Fetching data from:', url);
+        // console.log('Fetching data from:', url);
 
         const response = await fetch(url, APIDATA.API_OPTIONS);
         if (!response.ok) {
@@ -36,7 +38,7 @@ export default function Person() {
         }
 
         const res = await response.json();
-        // console.log('API Response:', res);
+        // console.log('API Response from Person:', res);
 
         if (!res || Object.keys(res).length === 0) {
           setError('No data found');
@@ -60,7 +62,7 @@ export default function Person() {
       {loading ? (
         <Loader />
       ) : error ? (
-        <div className="text-red-500">{error}</div>
+        <ErrorMsg msg={error} />
       ) : data ? (
         <section className="font-para">
           <img
@@ -99,6 +101,7 @@ export default function Person() {
             />
             <GridItem title="Also known as" data={data.also_known_as} />
           </Grid>
+          <Recommendations />
         </section>
       ) : (
         <div>No data available</div>

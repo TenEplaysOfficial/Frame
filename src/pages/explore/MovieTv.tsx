@@ -8,6 +8,8 @@ import TitleExplore from '../../components/explore/TitleExplore';
 import Grid from '../../components/Layout/Grid';
 import { convertMinutesToTimeFormat } from '../../utils/convertMinutesToTimeFormat';
 import { GridItem } from '../../components/explore/GridItem';
+import Recommendations from '../../components/explore/Recommendations';
+import ErrorMsg from '../../components/ErrorMsg';
 
 export default function MovieTv() {
   const { type, id } = useParams();
@@ -25,7 +27,7 @@ export default function MovieTv() {
       {isLoading ? (
         <Loader />
       ) : errorMessage ? (
-        <div className="mx-auto text-red-500">{errorMessage}</div>
+        <ErrorMsg msg={errorMessage} />
       ) : (
         <section className="font-para">
           <img
@@ -83,6 +85,7 @@ export default function MovieTv() {
             />
           </Grid>
           <CastandCrew />
+          <Recommendations />
         </section>
       )}
     </>

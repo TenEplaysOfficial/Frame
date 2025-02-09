@@ -3,6 +3,7 @@ import CastandCrewProfileCard from './CastandCrewProfileCard';
 import { useEffect, useState } from 'react';
 import APIDATA from '../../api';
 import TitleExplore from './TitleExplore';
+import Grid from '../Layout/Grid';
 
 export default function CastandCrew() {
   const { id, type } = useParams();
@@ -74,7 +75,7 @@ export default function CastandCrew() {
       {credits.crew.some((crew) => crew.profile_path) && (
         <>
           <TitleExplore title="Crew" />
-          <div className="flex flex-wrap gap-4">
+          <Grid columns="grid-cols-2 md:grid-cols-5 lg:grid-cols-8">
             {mergedCrew
               .slice(0, 10)
               .map(
@@ -89,13 +90,13 @@ export default function CastandCrew() {
                     />
                   ),
               )}
-          </div>
+          </Grid>
         </>
       )}
       {credits.cast.some((cast) => cast.profile_path) && (
         <>
           <TitleExplore title="Cast" />
-          <div className="flex flex-wrap gap-4">
+          <Grid columns="grid-cols-2 md:grid-cols-5 lg:grid-cols-8">
             {credits.cast
               // .slice(0, 10)
               .map(
@@ -110,7 +111,7 @@ export default function CastandCrew() {
                     />
                   ),
               )}
-          </div>
+          </Grid>
         </>
       )}
     </>

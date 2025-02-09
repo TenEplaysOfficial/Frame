@@ -6,6 +6,7 @@ import Loader from './Loader';
 import { SearchItemsProps } from '../types';
 import { Link } from 'react-router-dom';
 import useDebounce from '../hooks/useDebounce';
+import ErrorMsg from './ErrorMsg';
 
 export default function Search() {
   const [search, setSearch] = useState('');
@@ -58,7 +59,7 @@ const SearchItems = ({ data, isLoading, errorMessage }: SearchItemsProps) => {
       {isLoading ? (
         <Loader />
       ) : errorMessage ? (
-        <div className="text-center text-red-500">{errorMessage}</div>
+        <ErrorMsg msg={errorMessage} />
       ) : (
         data.map(
           (item) =>

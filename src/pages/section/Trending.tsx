@@ -4,6 +4,7 @@ import { MovieProps } from '../../types';
 import useFetch from '../../hooks/useFetch';
 import Loader from '../../components/Loader';
 import HorizontalLayout from '../../components/Layout/HorizontalLayout';
+import ErrorMsg from '../../components/ErrorMsg';
 
 export default function Trending({ title = 'Trending' }: { title?: string }) {
   const { data, isLoading, errorMessage }: MovieProps = useFetch({
@@ -17,7 +18,7 @@ export default function Trending({ title = 'Trending' }: { title?: string }) {
         {isLoading ? (
           <Loader />
         ) : errorMessage ? (
-          <div className="mx-auto text-red-500">{errorMessage}</div>
+          <ErrorMsg msg={errorMessage} />
         ) : (
           data.map(
             ({
