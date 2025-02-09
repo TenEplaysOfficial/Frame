@@ -11,7 +11,7 @@ export default function CastandCrewProfileCard({
 }: CastandCrewProfileCardProps) {
   return (
     <Link to={`/explore/person/${id}`}>
-      <div className="font-para w-32 text-center">
+      <div className="font-para w-40 text-center sm:w-32">
         <img
           src={`${APIDATA.IMAGE_w500_BASE_URL}${profile_path}`}
           alt={name}

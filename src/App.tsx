@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Navigate, useRoutes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Navigate,
+  useRoutes,
+  useParams,
+} from 'react-router-dom';
 import Home from './pages/Home';
 import Movies from './pages/section/Movies';
 import ScrollToTop from './components/ScrollToTop';
@@ -18,14 +23,16 @@ const AppRoutes = () => {
       element: <Navigate to="/explore/movies" replace />,
     },
     { path: 'explore/movies', element: <Movies /> },
-    { path: 'explore/:type/:id', element: <MovieTv /> },
-    { path: 'explore/person/:id', element: <Person /> },
+    {
+      path: 'explore/:type/:id',
+      element: <ConditionalRendering />,
+    },
     { path: '*', element: <Navigate to="/" /> },
   ];
 
   return useRoutes(routes);
 };
-function App() {
+export default function App() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       <Router>
@@ -38,5 +45,12 @@ function App() {
     </div>
   );
 }
-
-export default App;
+const ConditionalRendering = () => {
+  const { type, id } = useParams();
+  if (!id || !type) return <Navigate to="/" replace />;
+  if (type === 'person') {
+    return <Person />;
+  } else {
+    return <MovieTv />;
+  }
+};

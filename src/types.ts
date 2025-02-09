@@ -159,3 +159,18 @@ export type DetailsProps = {
   isLoading: boolean;
   errorMessage: string;
 };
+
+export type RecommendationsDataProps = {
+  backdrop_path?: string;
+  first_air_date?: string;
+  media_type?: string;
+  name?: string;
+  original_name?: string;
+  overview?: string;
+  id?: number;
+  origin_country?: string;
+  title?: string;
+  original_title?: string;
+  release_date?: string;
+  poster_path?: string;
+};

@@ -6,6 +6,7 @@ import Loader from '../../components/Loader';
 import { MovieProps } from '../../types';
 import MovieCard from '../../components/MovieCard';
 import Title from '../../components/Title';
+import ErrorMsg from '../../components/ErrorMsg';
 
 export default function Movies({ title = 'Movies' }: { title?: string }) {
   const [pageNo, setPageNo] = useState(1);
@@ -22,7 +23,7 @@ export default function Movies({ title = 'Movies' }: { title?: string }) {
       {isLoading ? (
         <Loader />
       ) : errorMessage ? (
-        <div className="mx-auto text-red-500">{errorMessage}</div>
+        <ErrorMsg msg={errorMessage} />
       ) : (
         <Grid>
           {data.map(
